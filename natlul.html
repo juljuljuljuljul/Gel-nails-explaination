@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>הרפתקאת הג׳ל הגדולה של נטלול</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fdf7f9;
+      --surface: #ffffff;
+      --pink-light: #fce8f0;
+      --pink-mid: #f0b8ce;
+      --pink-accent: #e07fa5;
+      --pink-deep: #c75f89;
+      --text-main: #3a2530;
+      --text-sub: #7a5566;
+      --text-muted: #b89aaa;
+      --border: #f2dae4;
+      --shadow: 0 4px 24px rgba(199, 95, 137, 0.08);
+      --shadow-hover: 0 8px 36px rgba(199, 95, 137, 0.18);
+      --radius: 18px;
+    }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1.5px solid var(--border);
+      padding: 1.4rem 2rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(199, 95, 137, 0.07);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .logo-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--pink-deep);
+      letter-spacing: -0.02em;
+      text-align: center;
+    }
+
+    .logo-sub {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── TABS ── */
+    nav.tabs {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-sub);
+      padding: 0.5rem 1.4rem;
+      border-radius: 50px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .tab-btn:hover {
+      background: var(--pink-light);
+      color: var(--pink-deep);
+    }
+
+    .tab-btn.active {
+      background: var(--pink-light);
+      color: var(--pink-deep);
+      font-weight: 600;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 3.5rem 2rem 2rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .hero h1 span {
+      color: var(--pink-accent);
+    }
+
+    .hero p {
+      margin-top: 0.85rem;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-sub);
+      line-height: 1.7;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      display: none;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 5rem;
+    }
+
+    .section.active { display: block; }
+
+    /* ── PRODUCT GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.75rem;
+      margin-top: 1rem;
+    }
+
+    /* ── PRODUCT CARD ── */
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    a.card-link {
+      text-decoration: none;
+      color: inherit;
+      display: contents;
+    }
+
+    .card-img-wrap {
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1.5px solid var(--border);
+    }
+
+    .card-img-wrap img {
+      max-height: 200px;
+      max-width: 90%;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-img-wrap img {
+      transform: scale(1.04);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--pink-accent);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.03em;
+    }
+
+    .card-body {
+      padding: 1.25rem 1.4rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .card-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--text-sub);
+      line-height: 1.75;
+      flex: 1;
+    }
+
+    .card-desc .pro { color: #4caf88; font-weight: 500; }
+    .card-desc .con { color: var(--pink-accent); font-weight: 500; }
+
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.9rem;
+      background: var(--pink-light);
+      color: var(--pink-deep);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      width: fit-content;
+      transition: background 0.2s;
+    }
+
+    .card:hover .card-cta {
+      background: var(--pink-mid);
+    }
+
+    .card-cta svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+
+    /* ── PLACEHOLDER CARD ── */
+    .card.placeholder {
+      border-style: dashed;
+      border-color: var(--pink-mid);
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .card.placeholder:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .placeholder-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 260px;
+      gap: 0.6rem;
+      color: var(--text-muted);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .placeholder-inner svg {
+      opacity: 0.4;
+    }
+
+    .placeholder-inner p {
+      font-size: 0.85rem;
+      font-weight: 400;
+      opacity: 0.7;
+    }
+
+    /* ── FYI Q&A ── */
+    .fyi-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 740px;
+    }
+
+    .fyi-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .fyi-q {
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Heebo', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      text-align: right;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      transition: background 0.15s;
+    }
+
+    .fyi-q:hover { background: var(--pink-light); }
+
+    .fyi-q.open { color: var(--pink-deep); }
+
+    .fyi-chevron {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      color: var(--pink-accent);
+      transition: transform 0.25s ease;
+    }
+
+    .fyi-q.open .fyi-chevron { transform: rotate(180deg); }
+
+    .fyi-a {
+      display: none;
+      padding: 0 1.5rem 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-sub);
+      line-height: 1.85;
+      border-top: 1.5px solid var(--border);
+      padding-top: 1.1rem;
+    }
+
+    .fyi-a.open { display: block; }
+
+    .fyi-a strong { font-weight: 600; color: var(--text-main); }
+
+    /* ── GLOSSARY INLINE ── */
+    .glossary-inline {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .gi-term {
+      display: grid;
+      grid-template-columns: 9rem 7rem 1fr;
+      gap: 0.5rem 1rem;
+      align-items: baseline;
+    }
+
+    .gi-en {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--pink-accent);
+      text-transform: uppercase;
+    }
+
+    .gi-he {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .gi-def {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      .gi-term {
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+        padding-bottom: 0.6rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .gi-term:last-child { border-bottom: none; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      header { padding: 1rem 1rem 0.75rem; }
+      .logo-title { font-size: 1.05rem; }
+      .tab-btn { font-size: 0.88rem; padding: 0.4rem 1rem; }
+      .hero { padding: 2rem 1.2rem 1.5rem; }
+      .section { padding: 1rem 1.2rem 4rem; }
+      .grid { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-title">הרפתקאת הג׳ל הגדולה של נטלול 💅</span>
+      <span class="logo-sub">מדריך הקניות המלא</span>
+    </div>
+    <nav class="tabs">
+      <button class="tab-btn active" onclick="switchTab('products', this)">מוצרים</button>
+      <button class="tab-btn" onclick="switchTab('glossary', this)">FYI</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════════════════════ PRODUCTS TAB ═══════════════════════════ -->
+<section id="tab-products" class="section active">
+  <div class="hero">
+    <h1>המוצרים שתצטרכי <span>לג׳ל המושלם</span></h1>
+    <p>רשימה מסודרת של כל הציוד — עם הסברים, יתרונות וחסרונות, ישר מאמזון לסלון.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- CARD 1 — מנורת UV -->
+    <div class="card">
+      <a class="card-link" href="https://www.amazon.de/-/en/dp/B0FD3HJ639?ref=ppx_pop_dt_b_asin_image&th=1" target="_blank" rel="noopener noreferrer">
+        <div class="card-img-wrap">
+          <img
+            src="https://m.media-amazon.com/images/I/61iwY1IlvIL._AC_SL1500_.jpg"
+            alt="מנורת UV"
+            loading="lazy"
+            onerror="this.style.display='none'; this.parentElement.querySelector('.img-fallback').style.display='flex';"
+          />
+          <div class="img-fallback" style="display:none; flex-direction:column; align-items:center; gap:0.5rem; color:var(--text-muted);">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <span style="font-size:0.8rem;">מנורת UV</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-name">מנורת UV קטנה</p>
+          <div class="card-desc">
+            מתאימה ל״ייבוש״ של אצבע אחת כל פעם.<br/>
+            עם טיימר של עשרים שניות, או שישים שניות בלחיצה ארוכה.<br/><br/>
+            <span class="pro">✦ יתרון —</span> קומפקטית ולא מאירה על אצבעות שלא צבעת, מה שמאפשר עבודה אחת-אחת.<br/>
+            <span class="con">✦ חיסרון —</span> עבודה אחת-אחת לוקחת יותר זמן.
+          </div>
+          <span class="card-cta">
+            לרכישה באמזון
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- CARD 2 — מנורת UV גדולה -->
+    <div class="card">
+      <a class="card-link" href="https://www.amazon.de/-/en/MelodySusie-Lightweight-P-ART06F-Control-Semi-Hardened/dp/B0FHB9QGZP/ref=ast_sto_dp_puis?th=1" target="_blank" rel="noopener noreferrer">
+        <div class="card-img-wrap">
+          <img
+            src="https://m.media-amazon.com/images/I/51ykVpRfMaL._AC_SL1500_.jpg"
+            alt="מנורת UV לכמה אצבעות"
+            loading="lazy"
+            onerror="this.style.display='none'; this.parentElement.querySelector('.img-fallback').style.display='flex';"
+          />
+          <div class="img-fallback" style="display:none; flex-direction:column; align-items:center; gap:0.5rem; color:var(--text-muted);">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <span style="font-size:0.8rem;">מנורת UV</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-name">מנורת UV לכמה אצבעות</p>
+          <div class="card-desc">
+            מנורה שאפשר להכניס אליה את כל היד — ארבע אצבעות יחד, ואת האגודל בנפרד.<br/><br/>
+            <span class="pro">✦ יתרון —</span> אם מרחת כבר את ארבעת האצבעות, היא מייבשת את כולן ביחד מהר.<br/>
+            <span class="con">✦ חיסרון —</span> ג׳ל שעדיין לא יובש הוא קצת נוזלי — אם מורחים יותר מאצבע אחת לפני ייבוש צריך לוודא שהוא לא נוזל ומשנה את צורת המריחה.
+          </div>
+          <span class="card-cta">
+            לרכישה באמזון
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- CARD 3 — בסיס מתקלף -->
+    <div class="card">
+      <a class="card-link" href="https://www.amazon.de/Makartt-Peel-Base-Coat-Beginner-Friendly/dp/B09LQ1ZK5Z/" target="_blank" rel="noopener noreferrer">
+        <div class="card-img-wrap">
+          <img
+            src="https://m.media-amazon.com/images/I/71tcmAJbr1L._SL1500_.jpg"
+            alt="בסיס מתקלף"
+            loading="lazy"
+            onerror="this.style.display='none'; this.parentElement.querySelector('.img-fallback').style.display='flex';"
+          />
+          <div class="img-fallback" style="display:none; flex-direction:column; align-items:center; gap:0.5rem; color:var(--text-muted);">
+            <span style="font-size:0.8rem;">בסיס מתקלף</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-name">בסיס מתקלף — Peel Off Base Coat</p>
+          <div class="card-desc">
+            בסיס שמאפשר הסרה קלה של הג׳ל בלי השרייה באצטון — פשוט מקלפים.<br/>
+            מוגדר כ-Beginner Friendly ומתאים לציפורניים דקות או חלשות.<br/><br/>
+            <span class="pro">✦ יתרון —</span> הסרה מהירה וללא נזק, אין צורך בפויל ואצטון.<br/>
+            <span class="con">✦ שים לב —</span> עדיין מצריך ייבוש עם מנורת UV/LED כמו כל ג׳ל.
+          </div>
+          <span class="card-cta">
+            לרכישה באמזון
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- CARD 4 — סט בסיס + טופ + נוזל הכנה -->
+    <div class="card">
+      <a class="card-link" href="https://www.amazon.de/Modelones-Polish-Nails-Manicure-Design/dp/B0C5XDFJD5?ref_=ast_sto_dp&th=1" target="_blank" rel="noopener noreferrer">
+        <div class="card-img-wrap">
+          <img
+            src="https://m.media-amazon.com/images/I/71We77PRfpL._SL1500_.jpg"
+            alt="סט בסיס טופ קואוט ונוזל הכנה"
+            loading="lazy"
+            onerror="this.style.display='none'; this.parentElement.querySelector('.img-fallback').style.display='flex';"
+          />
+          <div class="img-fallback" style="display:none; flex-direction:column; align-items:center; gap:0.5rem; color:var(--text-muted);">
+            <span style="font-size:0.8rem;">סט בסיס + טופ + נוזל הכנה</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-name">סט בסיס, נוזל הכנה וטופ קואוט</p>
+          <div class="card-desc">
+            סט משתלם שמגיע עם שלושה מוצרי יסוד:<br/>
+            <strong>Base Coat</strong> (בסיס) · <strong>Top Coat</strong> (מאיר עליון) · <strong>נוזל הכנה</strong><br/><br/>
+            <span class="pro">✦ יתרון —</span> משתלם לקנות את הכל ביחד, גם אם הבסיס לא נחוץ עכשיו — שיהיה לעתיד.<br/>
+            <span class="con">✦ שים לב —</span> לא להתבלבל בין המוצרים! Base Coat, Top Coat ונוזל הכנה הם שלושה דברים שונים לגמרי.
+          </div>
+          <span class="card-cta">
+            לרכישה באמזון
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- CARD 5 — סט צבעי ג׳ל -->
+    <div class="card">
+      <a class="card-link" href="https://www.amazon.de/modelones-Polish-Neutral-Colours-Design/dp/B0BPB4QXXB?ref_=ast_sto_dp&th=1" target="_blank" rel="noopener noreferrer">
+        <div class="card-img-wrap">
+          <img
+            src="https://m.media-amazon.com/images/I/71TXXN23zRL._SL1500_.jpg"
+            alt="סט צבעי ג׳ל"
+            loading="lazy"
+            onerror="this.style.display='none'; this.parentElement.querySelector('.img-fallback').style.display='flex';"
+          />
+          <div class="img-fallback" style="display:none; flex-direction:column; align-items:center; gap:0.5rem; color:var(--text-muted);">
+            <span style="font-size:0.8rem;">סט צבעי ג׳ל</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-name">סט צבעי ג׳ל — Modelones</p>
+          <div class="card-desc">
+            סט גוונים ניוטרליים, פינק ובז׳ — בדיוק מה שצריך להתחיל.<br/><br/>
+            <span class="pro">✦ טיפ —</span> אפשר לקנות גם בודדים, ואפשר למצוא בוקקים ברוסמן. הכי כדאי להיכנס לחנות האמזון של Modelones — הם מהמובילים בתחום עם לקים באיכות טובה וגוון רחב.
+          </div>
+          <span class="card-cta">
+            לרכישה באמזון
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- CARD 6 — לק עין חתול -->
+    <div class="card">
+      <a class="card-link" href="https://www.amazon.de/Modelones-Nail-Polish-Pure-Pink/dp/B0D9H9PB9D?ref_=ast_sto_dp&th=1" target="_blank" rel="noopener noreferrer">
+        <div class="card-img-wrap">
+          <img
+            src="https://m.media-amazon.com/images/I/81LDuD8aoML._SL1500_.jpg"
+            alt="לק עין חתול"
+            loading="lazy"
+            onerror="this.style.display='none'; this.parentElement.querySelector('.img-fallback').style.display='flex';"
+          />
+          <div class="img-fallback" style="display:none; flex-direction:column; align-items:center; gap:0.5rem; color:var(--text-muted);">
+            <span style="font-size:0.8rem;">לק עין חתול</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-name">לק עין חתול — Cat Eye Gel</p>
+          <div class="card-desc">
+            לק ג׳ל עם נצנצים מגנטיים שיוצרים אפקט מהמם של עין חתול.<br/><br/>
+            כי הג׳ל נשאר נוזלי עד שנכנס למנורה — אפשר להשתמש במגנט מעל הציפורן הרטובה כדי לכוון את הנצנצים ולקבל את האפקט. <span class="pro">✦ כל כיוון של המגנט נותן תוצאה אחרת.</span>
+          </div>
+          <span class="card-cta">
+            לרכישה באמזון
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════ FYI TAB ═══════════════════════════ -->
+<section id="tab-glossary" class="section">
+  <div class="hero" style="text-align:right; max-width:100%;">
+    <h1>FYI — <span>כל מה שכדאי לדעת</span></h1>
+    <p>שאלות שכנראה תשאלי, עם תשובות מהשטח.</p>
+  </div>
+
+  <div class="fyi-list">
+
+    <div class="fyi-card">
+      <button class="fyi-q" onclick="toggleFyi(this)">
+        כמה זמן הציפורן צריכה להיות במנורה?
+        <svg class="fyi-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="fyi-a">
+        רצוי דקה שלמה, במידה וזו שכבה דקה - כשמעליה את מורחת עוד שכבה אפשר גם חצי דקה, במידה וזה לק כהה עדיף שתי דקות.<br/>
+        לטופ קואוט ליתר בטחון דקה וחצי.<br/>
+        זה נכון לגבי מנורות חדשות ותקינות (במנורה של גילי זה לקח חמש דקות!)
+      </div>
+    </div>
+
+    <div class="fyi-card">
+      <button class="fyi-q" onclick="toggleFyi(this)">
+        אם לא סיימתי למרוח את כל השכבות ואני צריכה להפסיק?
+        <svg class="fyi-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="fyi-a">
+        כל שכבה יבשה תישאר כפי שהיא. מה שכן, כל השכבות מתחת לטופ ישארו עם דביקות מסוימת (זה מיועד לחיבור טוב יותר עם השכבה הבאה) — ובמידה שהפסקת ואת צריכה ללכת לעשות משהו, ידבק לך אבק לשכבה הזו.<br/><br/>
+        זה לא נורא — פשוט נגבי עם אלכוהול או אפילו עם מים (רק יבשי היטב ומרחי שכבת הכנה שוב).
+      </div>
+    </div>
+
+    <div class="fyi-card">
+      <button class="fyi-q" onclick="toggleFyi(this)">
+        מה אם פישלתי במריחה?
+        <svg class="fyi-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="fyi-a">
+        אם זה פשלה קטנה אז נגבי עם קיסם - אבל הכי בטוח זה פשוט להסיר את כל השכבה היא הרי לא התקשתה - ולמרוח מחדש. אם את לא מגיבה טוב לאציטון אפשר לעשות את זה עם אלכוהול או אפילו עם מים - אבל אז תנגבי טוב טוב ומרחי שוב את שכבת ההכנה שמונעת לחות על הציפורן.<br/><br/>
+        חשוב לוודא לפני שאת מכניסה את הציפורן למנורה שאין פקשושים או מקומות שבהן הלק נוגע בעור כי זה פשוט יתקשה בצורה הזו.
+      </div>
+    </div>
+
+    <div class="fyi-card">
+      <button class="fyi-q" onclick="toggleFyi(this)">
+        איך להגיע למריחה חלקה?
+        <svg class="fyi-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="fyi-a">
+        כדי למנוע משיכות מכחול נראות לעין כדאי לחכות שניה לפני שמכניסים את הלק למנורה כדי שהוא ״יתייצב״ ויתפזר בצורה אחידה —
+        אבל לא יותר מדי זמן שלא יתחיל לנזול ויצור חוסר אחידות בהצטברות הנוזל באיזשהו צד.
+      </div>
+    </div>
+
+    <div class="fyi-card">
+      <button class="fyi-q" onclick="toggleFyi(this)">
+        מה אם פקששתי וכבר הכנסתי למנורה?
+        <svg class="fyi-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="fyi-a">
+        בעיקרון אפשר לשייף ולתקן אחרי שהלק קשה (פחות רלוונטי לטופ קואוט כי לשייף אותו כבר יפגום במראה של הלק) אבל כל שכבה אחרת אפשר לשייף קצת אם צריך — רק מאוד חשוב להסיר את כל שאריות השיוף, ואם שטפת ידיים אז שוב אל תשכחי את השכבה של ההכנה.
+      </div>
+    </div>
+
+    <div class="fyi-card">
+      <button class="fyi-q" onclick="toggleFyi(this)">
+        איך מגיעים למראה מושלם?
+        <svg class="fyi-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="fyi-a">
+        לא מגיעים זה לא באמת נראה טוב כמו כשקוסמטיקאית עושה אבל אף אחד לא רואה את זה מקרוב כמוך.
+      </div>
+    </div>
+
+    <div class="fyi-card">
+      <button class="fyi-q" onclick="toggleFyi(this)">
+        מונחים מעולם הג׳ל
+        <svg class="fyi-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="fyi-a">
+        <div class="glossary-inline">
+          <div class="gi-term"><span class="gi-en">UV / LED Lamp</span><span class="gi-he">מנורת UV / LED</span><span class="gi-def">מנורה שמקשה (״מייבשת״) את לק הג׳ל. UV מתאימה לכל סוגי הג׳ל, LED מהירה יותר אך עובדת רק עם ג׳לים תואמים.</span></div>
+          <div class="gi-term"><span class="gi-en">Gel Polish</span><span class="gi-he">לק ג׳ל</span><span class="gi-def">לק שמתקשה תחת מנורה ומחזיק שבועיים ויותר. מורכב משכבות: בסיס, צבע, ומאיר עליון.</span></div>
+          <div class="gi-term"><span class="gi-en">Base Coat</span><span class="gi-he">בסיס</span><span class="gi-def">השכבה הראשונה לאחר הכנת הציפורן. מגנה עליה ומאפשרת הידבקות טובה של הצבע. לעתים קרובות באמצעות השכבה הזו ״מפסלים״ מבנה אנטומי של ציפורן.</span></div>
+          <div class="gi-term"><span class="gi-en">Top Coat</span><span class="gi-he">שכבה עליונה ואחרונה</span><span class="gi-def">נותנת ברק (או מט), מגנה על הצבע ומאריכה את חיי הציפוי.</span></div>
+          <div class="gi-term"><span class="gi-en">Primer / Dehydrator</span><span class="gi-he">נוזל הכנה</span><span class="gi-def">מסיר לחות ושמן מהציפורן לפני הציפוי. משפר הידבקות וממזער הרמה.</span></div>
+          <div class="gi-term"><span class="gi-en">Curing</span><span class="gi-he">ייבוש / קיורינג</span><span class="gi-def">תהליך ההקשחה של הג׳ל תחת המנורה. כל שכבה מייבשים בנפרד.</span></div>
+          <div class="gi-term"><span class="gi-en">Sticky Layer</span><span class="gi-he">שכבה דביקה</span><span class="gi-def">כל השכבות שאינן הטופ נשארות דביקות בכוונה לאחר ייבוש — כדי שהשכבה הבאה תיצמד טוב יותר. מנגבים רק בסיום, לפני הטופ קואוט.</span></div>
+          <div class="gi-term"><span class="gi-en">Soak Off</span><span class="gi-he">הסרה בהשרייה</span><span class="gi-def">השרייה באצטון עם פויל כ-10–15 דקות עד שהג׳ל מתפורר.</span></div>
+          <div class="gi-term"><span class="gi-en">E-File</span><span class="gi-he">פרזה</span><span class="gi-def">מקדחת חשמלית לציפורניים. מאיצה הכנה והסרת ג׳ל. דורשת תרגול!</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  הרפתקאת הג׳ל הגדולה של נטלול · כל הקישורים מובילים לאמזון בכרטיסייה חדשה
+</footer>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function toggleFyi(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = answer.classList.contains('open');
+    // close all
+    document.querySelectorAll('.fyi-a').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.fyi-q').forEach(q => q.classList.remove('open'));
+    // open clicked (unless it was already open)
+    if (!isOpen) {
+      answer.classList.add('open');
+      btn.classList.add('open');
+    }
+  }
+</script>
+
+</body>
+</html>
